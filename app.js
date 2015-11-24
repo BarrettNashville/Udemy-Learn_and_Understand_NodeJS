@@ -1,32 +1,10 @@
-// modules: a reusable block of code whose existence does not accidentally impact other code
+//require('./greet.js');
 
-// function statement
-function greet() {
-	
-	console.log('hi');	
-	
-}
+// can't call greet() here because a module doesn't affect the code in the rest of the application
+// that is, unless you use module.exports in the module which returns a value here
 
+// you can remove .js from the require parameter if you want
+// var greet = require('./greet.js');
+
+var greet = require('./greet');
 greet();
-
-// functions are first-class
-function logGreeting(fn) {
-	
-	fn();
-	
-}
-logGreeting(greet);
-
-// function expression
-var greetMe = function() {
-	console.log('Hi Tony');
-}
-greetMe();
-
-// it's first-class
-logGreeting(greetMe);
-
-// use a function expression on the fly
-logGreeting(function() {
-	console.log('Hello Tony!');
-});
