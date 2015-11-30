@@ -1,8 +1,17 @@
-var util = require('util');
-// util is a native module
-// you don't put ./ before these modules
+var arr = [];
 
-// they include additional functionality like below
-var name = 'Barrett';
-var greeting = util.format('Hello, %s', name);
-util.log(greeting);
+arr.push(function() {
+	console.log('Hello World 1');
+});
+
+arr.push(function() {
+	console.log('Hello World 2');
+});
+
+arr.push(function() {
+	console.log('Hello World 3');
+});
+
+arr.forEach(function(item){
+	item();
+});
