@@ -18,3 +18,14 @@ var greet3b = require('./greet3');
 greet3b.greet();
 // same object
 // because Node caches Module.Exports for each file name
+
+// this time we return the function constructor
+// and call it, creating a new object each time
+// instead of returning the one object every time
+// as above in greet3
+var Greet4 = require('./greet4');
+var grtr = new Greet4();
+grtr.greet();
+
+var greet5 = require('./greet5').greet;
+greet5();
