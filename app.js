@@ -1,15 +1,13 @@
-// template literals: a way to concatenate strings in JavaScript
-// easier to work with than a bunch of strings concatenated with '+'
-// this is a new feature in ES6
+var obj = {
+	name: 'John Doe',
+	greet: function() {
+		console.log(`Hello ${this.name}`);
+	}
+}
 
-// old way
-
-var name = 'John Doe';
-var greet = 'Hello ' + name;
-
-// ES6 way
-// uses the backtick
-var greet2 = `Hello ${ name }`;
-
-console.log(greet);
-console.log(greet2);
+obj.greet();
+// whatever you pass to call is what the 'this' keyword will point to
+obj.greet.call({ name: 'Jane Doe'});
+// apply is the same as call except you pass parameters in an array
+// instead of a comma separated list as in call
+obj.greet.apply({ name: 'Jane Doe'});
