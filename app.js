@@ -1,17 +1,14 @@
-var arr = [];
+var Emitter = require('./emitter');
 
-arr.push(function() {
-	console.log('Hello World 1');
+var emtr = new Emitter();
+
+emtr.on('greet', function() {
+	console.log('Somewhere, someone said hello.');	
 });
 
-arr.push(function() {
-	console.log('Hello World 2');
+emtr.on('greet', function() {
+	console.log('A greeting occurred!');	
 });
 
-arr.push(function() {
-	console.log('Hello World 3');
-});
-
-arr.forEach(function(item){
-	item();
-});
+console.log('Hello!');
+emtr.emit('greet');
