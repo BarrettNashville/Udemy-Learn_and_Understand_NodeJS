@@ -1,30 +1,15 @@
-var EventEmitter = require('events');
-var util = require('util');
+// template literals: a way to concatenate strings in JavaScript
+// easier to work with than a bunch of strings concatenated with '+'
+// this is a new feature in ES6
 
-function Greetr() {
-	this.greeting = 'Hello World!';
-}
+// old way
 
-// any objects created from Greetr should also have access
-// to the methods and properties on the prototype property
-// of EventEmitter
-util.inherits(Greetr, EventEmitter);
+var name = 'John Doe';
+var greet = 'Hello ' + name;
 
-// you can still add additional properties to the prototype
-// of Greetr
-Greetr.prototype.greet = function(data) {
-	console.log(this.greeting + ': ' + data);
-	
-	// a method from the EventEmitter prototype
-	// we are able to pass parameters to the emit method,
-	// data in this case
-	this.emit('greet', data); 
-}
+// ES6 way
+// uses the backtick
+var greet2 = `Hello ${ name }`;
 
-var greeter1 = new Greetr();
-
-greeter1.on('greet', function(data) {
-	console.log('Someone greeted!: ' + data);
-});
-
-greeter1.greet('Barrett');
+console.log(greet);
+console.log(greet2);
