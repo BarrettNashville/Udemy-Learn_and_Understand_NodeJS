@@ -1,23 +1,24 @@
-// get built-in fs module
 var fs = require('fs');
 
-// read file syncrhonously
-// may be good for config file you need to read before other code should run
-var greet = fs.readFileSync(__dirname + '/greet.txt', 'utf8');
-console.log(greet);
+// the second argument to createReadStream is an optional options object 
+var readable = fs.createReadStream(__dirname + '/greet.txt', 
+	{ encoding: 'utf8', highWaterMark: 16 * 1024});
+	
+var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
 
-var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', 
-// callback function for asynchronous function call
-// Error-First Callback: callbacks that take an error object
-// as their first parameter. 
-// null if no error, otherwise will contain an object defining the error.
-// This is a standard so we know in what order to place our 
-// parameters for our callbacks. 
-function(err, data) {
-	console.log(data); // returns a buffer
+/*
+readable.on('data', function(chunk) {
+	console.log(chunk);
 });
-// this uses buffers so it could cause performance problems
-// if a lot of people are using this code at once.
-// that puts a lot of stuff on the heap
+*/
+// the default buffer size is 64k so it only logs once if txt file less than that.
+// if file is larger than that, log is run multiple times.
 
-console.log('Done!');
+readable.on('data', function(chunk) {
+	console.log(chunk.length);
+	
+	//copy contents of greet.txt in chunks to greetcopy.txt
+	//this minimizes memory usage on the server.
+	writable.write(chunk);
+});
+// this is so common in Node, there is a faster way to do it
