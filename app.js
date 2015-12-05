@@ -1,24 +1,18 @@
-var http = require('http');
-var fs = require('fs');
+var express = require('express');
+var app = express();
 
-http.createServer(function(req, res) {
-	
-	if(req.url === '/') {
-		fs.createReadStream(__dirname + '/index.htm').pipe(res);
-	}
-	
-	else if(req.url === '/json') {
-		res.writeHead(200, {'Content-Type': 'application/json'});
-		var object = {
-			firstname: 'John',
-			lastname: 'Doe'
-		};
-		res.end(JSON.stringify(object));
-	}
-	else {
-		// default 
-		res.writeHead(404);
-		res.end('404 - Nothing here');
-	}
-	
-}).listen(1337, '127.0.0.1');
+// use the PORT environment variable, if it exists, or 3000 if it does not
+var port = process.env.PORT || 3000;
+
+app.get('/', function(req, res) {
+	// you don't have to specify content type or header info; 
+	// express figures that out for you
+	res.send('<html><head></head><body><h1>Hello world!!</h1></body></html>');
+});
+
+app.get('/api', function(req, res) {
+	// json takes care of converting the JavaScript object to JSON
+	res.json({ firstname: 'John', lastname: 'Doe' });
+});
+
+app.listen(port);
