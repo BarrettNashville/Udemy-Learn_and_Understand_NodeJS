@@ -5,7 +5,6 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false});
-// adding a parser to handley json in the body of a POST request
 var jsonParser = bodyParser.json();
 
 app.use('/assets', express.static(__dirname + '/public'));
@@ -22,28 +21,28 @@ app.get('/', function(req, res) {
 });
 
 app.get('/person/:id', function(req, res) {
-	// express pulls values from URL automatically for GET requests
-	// however it will not pull values from content body for POST requests,
-	// so for this we need more middleware, like body-parser
 	res.render('person', {ID: req.params.id, Qstr: req.query.qstr});
 });
 
-// urlencodedParser is just a callback function, much like our custom function which comes next.
-// urlencodedParser parses the body of the post request
 app.post('/person', urlencodedParser, function(req, res) {
 	res.send('Thank you!');
 	console.log(req.body.firstname);
 	console.log(req.body.lastname);
 });
 
-app.post('/personjson', jsonParser, function(req, res) {
-	res.send('Thank you for the JSON data!');
-	console.log(req.body.firstname);
-	console.log(req.body.lastname);
+/// EXAMPLE OF A RESTful API
+app.get('/api/person/:id', function(req, res) {
+	// get that data from the database for that person
+	res.json({ firstname: 'John', lastname: 'Doe' });
 });
 
-app.get('/api', function(req, res) {
-	res.json({ firstname: 'John', lastname: 'Doe' });
+
+app.post('/api/person', jsonParser, function(req, res) {
+	// save to the database for that person
+});
+
+app.delete('api/person/:id', function(req, res) {
+	// delete from the database for that person
 });
 
 app.listen(port);
