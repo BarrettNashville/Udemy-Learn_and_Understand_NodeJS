@@ -1,14 +1,17 @@
-<html>
+<html ng-app="TestApp">
 	<head>
-		<link href="assets/style.css" type="text/css" rel="stylesheet" />
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<title>The MEAN stack</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.js"></script>
 	</head>
-	<body>
-		<h1>Hello world!</h1>
-		<form method="POST" action="/person">
-			First name: <input type="text" id="firstname" name="firstname" /> <br />
-			Last name: <input type="text" id="lastname" name="lastname" /> <br />
-			<input type="submit" value="Submit" />
-		</form>
+	<body ng-controller="MainController as vm">
+		<ul>
+			<li ng-repeat="person in vm.people">
+				{{ person.name }}
+			</li>
+		</ul>
+		<script>
+			var clientPeople = <%- JSON.stringify(serverPeople) %>;
+		</script>
+		<script src="/assets/js/app.js"></script>
 	</body>
 </html>

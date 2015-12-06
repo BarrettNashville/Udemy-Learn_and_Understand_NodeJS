@@ -1,24 +1,26 @@
 var express = require('express');
 var app = express();
 
-//modules:
-var apiController = require('./controllers/apiController');
-var htmlController = require('./controllers/htmlController');
-
 var port = process.env.PORT || 3000;
 
-app.use('/assets', express.static(__dirname + '/public'));
+var people = [
+		{
+			name: 'John Doe'
+		},
+		{
+			name: 'Jane Doe'
+		},
+		{
+			name: 'Jim Doe'
+		}
+];
 
 app.set('view engine', 'ejs'); 
+app.use('/assets', express.static(__dirname + '/public'));
 
-app.use('/', function(req, res, next) {
-	console.log('Request Url: ' + req.url); 
-	next(); 
+
+app.get('/', function(req, res) {
+	res.render('index', { serverPeople: people });
 });
-
-// using modules
-// pass the "app" by reference to the .../Controller.js file in the controllers folder
-htmlController(app);
-apiController(app);
 
 app.listen(port);
