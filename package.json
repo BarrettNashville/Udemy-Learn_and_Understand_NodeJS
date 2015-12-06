@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/BarrettNashville/Udemy-Learn_and_Understand_NodeJS#readme",
   "dependencies": {
+    "ejs": "^2.3.4",
     "express": "^4.13.3"
   }
 }
