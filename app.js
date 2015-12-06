@@ -1,12 +1,15 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
 var port = process.env.PORT || 3000;
 
+var urlencodedParser = bodyParser.urlencoded({ extended: false});
+// adding a parser to handley json in the body of a POST request
+var jsonParser = bodyParser.json();
+
 app.use('/assets', express.static(__dirname + '/public'));
 
-// using a basic templating engine called EJS, simliar to ASP.NET web forms
-// by default express will look for the static view files inside a folder called views
 app.set('view engine', 'ejs'); 
 
 app.use('/', function(req, res, next) {
@@ -15,14 +18,28 @@ app.use('/', function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-	//express will go to views and look for a file named below, plus the extension above (ejs).
-	//this makes changing the view engine easier 
 	res.render('index');
 });
 
 app.get('/person/:id', function(req, res) {
-	// the second argument passed to render is an object of URL parameters
-	res.render('person', {ID: req.params.id});
+	// express pulls values from URL automatically for GET requests
+	// however it will not pull values from content body for POST requests,
+	// so for this we need more middleware, like body-parser
+	res.render('person', {ID: req.params.id, Qstr: req.query.qstr});
+});
+
+// urlencodedParser is just a callback function, much like our custom function which comes next.
+// urlencodedParser parses the body of the post request
+app.post('/person', urlencodedParser, function(req, res) {
+	res.send('Thank you!');
+	console.log(req.body.firstname);
+	console.log(req.body.lastname);
+});
+
+app.post('/personjson', jsonParser, function(req, res) {
+	res.send('Thank you for the JSON data!');
+	console.log(req.body.firstname);
+	console.log(req.body.lastname);
 });
 
 app.get('/api', function(req, res) {
